@@ -11,12 +11,19 @@ public class Burger {
     private double price;
     private List<Addition> additions;
 
-    public Burger(String name, BreadRoll breadRoll, Meat meat) {
+    public Burger(String name, BreadRoll breadRoll) {
         this.name = name;
         this.breadRoll = breadRoll;
-        this.meat = meat;
+        this.meat = setMeat();
         this.additions = setAdditions();
         this.price = price + getBreadRoll().getPrice() + getMeat().getPrice() + additionTotal();
+        System.out.printf("Burger Details:\nName : %s\nBread : %s\tR%.2f\nMeat : %s\tR%.2f\n",
+                this.name,this.breadRoll.getName(),this.breadRoll.getPrice(),this.meat.getName(),this.meat.getPrice());
+        System.out.println("Your Additions");
+        for(int i = 0 ; i < this.additions.size(); i ++){
+            System.out.printf("%s\tR%.2f\n",this.additions.get(i).getName(),this.additions.get(i).getPrice());
+        }
+
 
     }
 
@@ -49,10 +56,10 @@ public class Burger {
         String chose;
         Meat meat = new Meat();
         meat.printMeatBurger();
-        System.out.println("Enter chose");
-        chose = scanner.nextLine();
+        System.out.println("Enter the paddie you would like");
+        chose = scanner.next();
         meat = choseMeat(chose);
-        scanner.close();
+//        scanner.close();
         return meat;
     }
 
@@ -69,13 +76,13 @@ public class Burger {
     }
 
     public List<Addition> setAdditions() {
-        System.out.println("Burger Name : " + this.name);
-        List<Addition> additions = new ArrayList<>();
+//        System.out.println("Burger Name : " + this.name);
         Scanner scanner = new Scanner(System.in);
+        List<Addition> additions = new ArrayList<>();
         Addition addition = new Addition();
         addition.printAdditionsMenu();
         String chose;
-        System.out.println("Enter chose");
+        System.out.println("Enter the Addition you would like");
         chose = scanner.nextLine();
         int count = 0;
         while (true && chose.equals("q") == false) {
@@ -85,15 +92,16 @@ public class Burger {
                 break;
             }
             addition.printAdditionsMenu();
-            System.out.println("Enter chose");
+            System.out.println("Enter another Addition or Quit by pressing: q");
             chose = scanner.nextLine();
         }
+//
+//        System.out.println("Selected " + additions.size()+ " Additions: ");
+//        for (int i = 0; i < additions.size(); i++) {
+//            System.out.println(i + 1 + " " + additions.get(i).getName() + " R" + additions.get(i).getPrice());
+//        }
+//        System.out.println();
         scanner.close();
-        System.out.println("Selected " + additions.size()+ " Additions: ");
-        for (int i = 0; i < additions.size(); i++) {
-            System.out.println(i + 1 + " " + additions.get(i).getName() + " R" + additions.get(i).getPrice());
-        }
-        System.out.println();
         return additions;
 
     }
@@ -130,9 +138,11 @@ public class Burger {
                 Meat veggie = new Meat("Veggie", 10);
                 return veggie;
             case "3":
-            case "4":
                 Meat beef = new Meat("Beef",12);
                 return beef;
+            case "4":
+                Meat vegan = new Meat("Vegan",13);
+                return vegan;
             default:
                 return null;
         }
