@@ -11,18 +11,21 @@ public class Burger {
     private double price;
     private List<Addition> additions;
 
-    public Burger(String name, BreadRoll breadRoll) {
+    public Burger(String name) {
+        System.out.println(this.getClass().getSimpleName());
+        int adds;
         this.name = name;
-        this.breadRoll = breadRoll;
+        this.breadRoll = setBreadRoll();
         this.meat = setMeat();
         this.additions = setAdditions();
         this.price = price + getBreadRoll().getPrice() + getMeat().getPrice() + additionTotal();
         System.out.printf("Burger Details:\nName : %s\nBread : %s\tR%.2f\nMeat : %s\tR%.2f\n",
-                this.name,this.breadRoll.getName(),this.breadRoll.getPrice(),this.meat.getName(),this.meat.getPrice());
-        System.out.println("Your Additions");
-        for(int i = 0 ; i < this.additions.size(); i ++){
-            System.out.printf("%s\tR%.2f\n",this.additions.get(i).getName(),this.additions.get(i).getPrice());
+                this.name, this.breadRoll.getName(), this.breadRoll.getPrice(), this.meat.getName(), this.meat.getPrice());
+        for (int i = 0; i < this.additions.size(); i++) {
+            System.out.printf("%s\tR%.2f\n", this.additions.get(i).getName(), this.additions.get(i).getPrice());
         }
+        System.out.println();
+        System.out.printf("Price : R%.2f", price);
 
 
     }
@@ -43,13 +46,22 @@ public class Burger {
         return breadRoll;
     }
 
-    public void setBreadRoll(BreadRoll breadRoll) {
-        this.breadRoll = breadRoll;
-    }
-
     public Meat getMeat() {
         return meat;
     }
+
+    public BreadRoll setBreadRoll() {
+        Scanner scanner = new Scanner(System.in);
+        String chose;
+        BreadRoll breadRoll = new BreadRoll();
+        breadRoll.printBreadMenu();
+        System.out.println("Enter the bread you would like.");
+        chose = scanner.next();
+        breadRoll = choseBread(chose);
+        return breadRoll;
+
+    }
+
 
     public Meat setMeat() {
         Scanner scanner = new Scanner(System.in);
@@ -59,24 +71,11 @@ public class Burger {
         System.out.println("Enter the paddie you would like");
         chose = scanner.next();
         meat = choseMeat(chose);
-//        scanner.close();
         return meat;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public List<Addition> getAdditions() {
-        return additions;
-    }
 
     public List<Addition> setAdditions() {
-//        System.out.println("Burger Name : " + this.name);
         Scanner scanner = new Scanner(System.in);
         List<Addition> additions = new ArrayList<>();
         Addition addition = new Addition();
@@ -85,7 +84,7 @@ public class Burger {
         System.out.println("Enter the Addition you would like");
         chose = scanner.nextLine();
         int count = 0;
-        while (true && chose.equals("q") == false) {
+        while (chose.equals("q") == false) {
             additions.add(choseAddition(chose));
             count++;
             if (count >= 4) {
@@ -95,35 +94,25 @@ public class Burger {
             System.out.println("Enter another Addition or Quit by pressing: q");
             chose = scanner.nextLine();
         }
-//
-//        System.out.println("Selected " + additions.size()+ " Additions: ");
-//        for (int i = 0; i < additions.size(); i++) {
-//            System.out.println(i + 1 + " " + additions.get(i).getName() + " R" + additions.get(i).getPrice());
-//        }
-//        System.out.println();
         scanner.close();
         return additions;
 
     }
 
+
     public Addition choseAddition(String chose) {
 
         switch (chose) {
             case "1":
-                Addition tomato = new Addition("tomato", 5);
-                return tomato;
+                return new Addition("tomato", 5);
             case "2":
-                Addition lettuce = new Addition("lettuce", 2);
-                return lettuce;
+                return new Addition("lettuce", 2);
             case "3":
-                Addition pickels = new Addition("pickels", 5);
-                return pickels;
+                return new Addition("pickels", 5);
             case "4":
-                Addition carrot = new Addition("carrot", 4);
-                return carrot;
+                return new Addition("carrot", 4);
             case "5":
-                Addition bacon = new Addition("bacon", 10);
-                return bacon;
+                return new Addition("bacon", 10);
             default:
                 return null;
         }
@@ -132,24 +121,30 @@ public class Burger {
     public Meat choseMeat(String chose) {
         switch (chose) {
             case "1":
-                Meat chicken = new Meat("Chicken", 15);
-                return chicken;
+                return new Meat("Chicken", 15);
             case "2":
-                Meat veggie = new Meat("Veggie", 10);
-                return veggie;
+                return new Meat("Veggie", 10);
             case "3":
-                Meat beef = new Meat("Beef",12);
-                return beef;
+                return new Meat("Beef", 12);
             case "4":
-                Meat vegan = new Meat("Vegan",13);
-                return vegan;
+                return new Meat("Vegan", 13);
             default:
                 return null;
         }
     }
 
-    public void printBurgerAdditions() {
-        Addition addition = new Addition();
-        addition.printAdditionsMenu();
+    public BreadRoll choseBread(String chose) {
+        switch (chose) {
+            case "1":
+                return new BreadRoll("Normal", 5);
+            case "2":
+                return new BreadRoll("Brown Rye", 8);
+            case "3":
+                return new BreadRoll("Low Gi", 12);
+            default:
+                return null;
+        }
     }
+
+
 }
