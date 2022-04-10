@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class HealthyBurger extends Burger {
     public HealthyBurger() {
         super("Healthy Burger");
-        System.out.println(this.getClass().getSimpleName());
     }
 
     @Override

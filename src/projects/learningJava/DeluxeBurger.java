@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DeluxeBurger extends Burger{
-    public DeluxeBurger(String name) {
-        super(name);
-    }
     public DeluxeBurger() {
+        super("Deluxe Burger");
     }
+
 
     @Override
     public List<Addition> setAdditions() {
